@@ -1,0 +1,363 @@
+/* ==========================================================================
+   Brand intro — plays once per session.
+   Timeline (s):  0.1 rule draws · 0.25–1.55 car drives in & brakes
+                  1.45 badge pops · 1.95 wordmark reveals · 2.7 shine
+                  3.4 curtain lifts
+   ========================================================================== */
+
+html.intro-lock,
+html.intro-lock body {
+  overflow: hidden;
+}
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: grid;
+  place-items: center;
+  background: var(--grad-ink);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.75s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.intro::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* thin sun edge on the curtain as it lifts */
+.intro::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: var(--grad-sun);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.intro--exit {
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+
+.intro--exit::after {
+  opacity: 1;
+}
+
+.intro--exit .intro__stage {
+  opacity: 0;
+  transform: translateY(-40px) scale(0.98);
+}
+
+.intro__glow {
+  position: absolute;
+  width: min(90vw, 760px);
+  aspect-ratio: 1;
+  left: 50%;
+  top: 50%;
+  translate: -50% -58%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 198, 26, 0.26), rgba(243, 146, 8, 0.08) 55%, transparent 72%);
+  opacity: 0;
+  animation: intro-fade 1.2s 1.4s var(--ease) forwards;
+}
+
+.intro__stage {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  transition: opacity 0.5s var(--ease), transform 0.75s var(--ease);
+}
+
+/* ---------- badge ---------- */
+.intro__badge {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.intro__emblem {
+  width: auto;
+  height: clamp(130px, 25vh, 220px);
+  opacity: 0;
+  transform-origin: 50% 90%;
+  animation:
+    intro-pop 0.8s 1.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+    intro-glow 1.2s 2.75s ease-in-out forwards;
+}
+
+.intro__burst {
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 198, 26, 0.7);
+  opacity: 0;
+  animation: intro-burst 1s 1.55s var(--ease) forwards;
+}
+
+/* ---------- wordmark ---------- */
+.intro__word {
+  position: relative;
+  margin-top: clamp(-18px, -1.6vh, -8px);
+  -webkit-mask-image: linear-gradient(90deg, #000 40%, transparent 60%);
+  mask-image: linear-gradient(90deg, #000 40%, transparent 60%);
+  -webkit-mask-size: 260% 100%;
+  mask-size: 260% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: 100% 0;
+  mask-position: 100% 0;
+  transform: translateY(8px);
+  animation: intro-wipe 0.9s 1.95s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.intro__word img {
+  width: auto;
+  height: clamp(46px, 9vh, 92px);
+  max-width: 86vw;
+  object-fit: contain;
+}
+
+.intro__word::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, 0.9) 50%, transparent 62%) no-repeat;
+  background-size: 260% 100%;
+  background-position: 130% 0;
+  -webkit-mask: var(--word-mask) center / contain no-repeat;
+  mask: var(--word-mask) center / contain no-repeat;
+  mix-blend-mode: soft-light;
+  animation: intro-shine 0.9s 2.7s ease-in-out forwards;
+}
+
+/* ---------- road + car ---------- */
+.intro__road {
+  position: relative;
+  width: clamp(280px, 80vw, 560px);
+  height: clamp(44px, 7vh, 64px);
+  margin-top: clamp(14px, 3vh, 30px);
+}
+
+.intro__rule {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 9px;
+  transform-origin: left;
+  transform: scaleX(0);
+  background:
+    linear-gradient(rgba(251, 246, 234, 0.35), rgba(251, 246, 234, 0.35)) bottom / 100% 1.5px no-repeat,
+    repeating-linear-gradient(90deg, rgba(251, 246, 234, 0.3) 0 1.5px, transparent 1.5px 14px) bottom / 100% 5px
+      no-repeat,
+    repeating-linear-gradient(90deg, rgba(251, 246, 234, 0.45) 0 1.5px, transparent 1.5px 70px) bottom / 100% 9px
+      no-repeat;
+  -webkit-mask: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+  mask: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+  animation: intro-rule 0.9s 0.1s var(--ease) forwards;
+}
+
+.intro-car {
+  position: absolute;
+  left: 50%;
+  bottom: 4px;
+  width: clamp(92px, 20vw, 132px);
+  transform: translateX(calc(-50% - 50vw - 140px));
+  animation:
+    intro-drive 1.3s 0.25s cubic-bezier(0.12, 0.75, 0.25, 1) forwards,
+    intro-brake 0.45s 1.45s ease-out;
+}
+
+.intro-car__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.45));
+}
+
+.intro-car__wheel {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: intro-spin 1.3s 0.25s cubic-bezier(0.12, 0.75, 0.25, 1) forwards;
+}
+
+.intro-car__trail {
+  position: absolute;
+  right: 86%;
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, transparent, rgba(255, 198, 26, 0.85));
+  transform-origin: right;
+  opacity: 0;
+  animation: intro-trail 1.45s 0.25s ease-out forwards;
+}
+
+.intro-car__trail--a {
+  top: 34%;
+  width: 140%;
+}
+
+.intro-car__trail--b {
+  top: 52%;
+  width: 190%;
+  background: linear-gradient(90deg, transparent, rgba(243, 146, 8, 0.9));
+  animation-delay: 0.3s;
+}
+
+.intro-car__trail--c {
+  top: 70%;
+  width: 110%;
+  height: 2px;
+  animation-delay: 0.35s;
+}
+
+/* ---------- skip ---------- */
+.intro__skip {
+  position: absolute;
+  right: clamp(16px, 4vw, 40px);
+  bottom: clamp(16px, 4vw, 36px);
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(251, 246, 234, 0.6);
+  box-shadow: inset 0 0 0 1px rgba(251, 246, 234, 0.18);
+  opacity: 0;
+  animation: intro-fade 0.6s 0.8s ease forwards;
+  transition: color 0.2s, box-shadow 0.2s;
+}
+
+.intro__skip:hover {
+  color: var(--cream);
+  box-shadow: inset 0 0 0 1px rgba(251, 246, 234, 0.5);
+}
+
+/* ---------- keyframes ---------- */
+@keyframes intro-fade {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes intro-rule {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes intro-drive {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes intro-spin {
+  from {
+    transform: rotate(-1800deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+/* nose dips under braking, then settles */
+@keyframes intro-brake {
+  0%,
+  100% {
+    rotate: 0deg;
+  }
+  40% {
+    rotate: 2.2deg;
+  }
+  75% {
+    rotate: -0.6deg;
+  }
+}
+
+@keyframes intro-trail {
+  0% {
+    opacity: 0;
+    transform: scaleX(0.3);
+  }
+  15% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  70% {
+    opacity: 0.8;
+    transform: scaleX(0.7);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+}
+
+@keyframes intro-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.35) rotate(-10deg);
+  }
+  55% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes intro-glow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 0 rgba(255, 198, 26, 0));
+  }
+  45% {
+    filter: drop-shadow(0 0 28px rgba(255, 198, 26, 0.55));
+  }
+}
+
+@keyframes intro-burst {
+  0% {
+    opacity: 0.9;
+    transform: scale(0.6);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.45);
+  }
+}
+
+@keyframes intro-wipe {
+  to {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+    transform: none;
+  }
+}
+
+@keyframes intro-shine {
+  to {
+    background-position: -30% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro {
+    display: none;
+  }
+}

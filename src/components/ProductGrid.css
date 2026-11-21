@@ -1,0 +1,41 @@
+.pgrid {
+  display: grid;
+  gap: clamp(18px, 2.2vw, 30px);
+  grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr));
+}
+
+.pgrid > * {
+  display: flex;
+}
+
+.pgrid > * > .pcard {
+  width: 100%;
+}
+
+.pgrid--4 {
+  --cols: 4;
+}
+
+.pgrid--3 {
+  --cols: 3;
+}
+
+@media (max-width: 1100px) {
+  .pgrid--4 {
+    --cols: 3;
+  }
+}
+
+@media (max-width: 860px) {
+  .pgrid--4,
+  .pgrid--3 {
+    --cols: 2;
+  }
+}
+
+@media (max-width: 520px) {
+  .pgrid--4,
+  .pgrid--3 {
+    --cols: 1;
+  }
+}

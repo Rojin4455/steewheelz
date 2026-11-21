@@ -1,0 +1,126 @@
+.custom {
+  padding-block: clamp(40px, 6vw, 80px);
+}
+
+.custom__panel {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(32px, 5vw, 72px);
+  padding: clamp(32px, 6vw, 80px);
+  border-radius: var(--radius-xl);
+  background: var(--grad-sun);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.custom__panel::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: radial-gradient(circle at 15% 110%, rgba(255, 255, 255, 0.45), transparent 45%),
+    repeating-linear-gradient(-45deg, rgba(22, 18, 13, 0.035) 0 2px, transparent 2px 14px);
+}
+
+.custom__eyebrow {
+  color: var(--ink);
+}
+
+.custom__copy h2 {
+  margin: 18px 0 20px;
+  font-size: clamp(38px, 5vw, 68px);
+  color: var(--ink);
+}
+
+.custom__copy em {
+  font-weight: 500;
+}
+
+.custom__copy p {
+  max-width: 500px;
+  margin-bottom: 32px;
+  font-size: 17px;
+  color: rgba(22, 18, 13, 0.75);
+}
+
+.custom__steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+  align-content: center;
+}
+
+.custom__steps li {
+  display: flex;
+  gap: 18px;
+  padding: 20px 22px;
+  border-radius: var(--radius);
+  background: rgba(255, 253, 248, 0.72);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 6px 20px -12px rgba(120, 70, 0, 0.5);
+  transition: transform 0.4s var(--ease), background 0.3s;
+}
+
+.custom__steps li:hover {
+  transform: translateX(6px);
+  background: var(--paper);
+}
+
+.custom__num {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--sun);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.custom__steps h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0;
+  margin-bottom: 4px;
+}
+
+.custom__steps p {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.custom__mascot {
+  position: absolute;
+  z-index: -1;
+  width: 340px;
+  left: 30%;
+  bottom: -90px;
+  opacity: 0.16;
+  transform: rotate(-10deg);
+  filter: grayscale(1) contrast(1.4);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+@media (max-width: 960px) {
+  .custom__panel {
+    grid-template-columns: 1fr;
+  }
+  .custom__mascot {
+    left: auto;
+    right: -60px;
+    top: -40px;
+    bottom: auto;
+    width: 240px;
+  }
+}

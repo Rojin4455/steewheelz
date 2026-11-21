@@ -1,0 +1,53 @@
+.brand-emblem,
+.brand-wordmark,
+.brand-full {
+  display: block;
+  height: auto;
+  max-width: 100%;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* ---------- nav lockup ---------- */
+.lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lockup .brand-emblem {
+  width: auto;
+  height: 52px;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.18));
+  transform-origin: 50% 85%;
+  transition: transform 0.6s var(--ease);
+}
+
+.lockup .brand-wordmark {
+  width: auto;
+  height: 30px;
+  margin-top: 4px;
+  transition: transform 0.6s var(--ease);
+}
+
+a:hover > .lockup .brand-emblem,
+.lockup:hover .brand-emblem {
+  transform: rotate(-8deg) scale(1.06);
+}
+
+a:hover > .lockup .brand-wordmark,
+.lockup:hover .brand-wordmark {
+  transform: translateX(2px);
+}
+
+@media (max-width: 560px) {
+  .lockup {
+    gap: 4px;
+  }
+  .lockup .brand-emblem {
+    height: 44px;
+  }
+  .lockup .brand-wordmark {
+    height: 24px;
+  }
+}
