@@ -10,7 +10,8 @@ export const SITE = {
     'Scale-model fuel stations, drive-thrus, garages and storefronts — hand-built, hand-weathered and made to be collected.',
 
   // WhatsApp number in international format, digits only (no +, spaces or dashes).
-  whatsappNumber: '919999999999',
+  // Set VITE_WHATSAPP_NUMBER in .env (see .env.example).
+  whatsappNumber: (import.meta.env.VITE_WHATSAPP_NUMBER || '').replace(/\D/g, ''),
 
   // Default opening line used for general (non-product) enquiries.
   whatsappGreeting: "Hi Steewheelz! I'd love to know more about your miniature dioramas.",
@@ -18,8 +19,8 @@ export const SITE = {
   currency: 'INR',
   locale: 'en-IN',
 
-  email: 'hello@steewheelz.com',
+  email: import.meta.env.VITE_CONTACT_EMAIL || 'hello@steewheelz.com',
   location: 'Kochi, India',
-  instagram: 'https://instagram.com/',
-  youtube: 'https://youtube.com/',
+  instagram: import.meta.env.VITE_INSTAGRAM_URL || 'https://www.instagram.com/steewheelz/',
+  youtube: import.meta.env.VITE_YOUTUBE_URL || 'https://youtube.com/',
 }
