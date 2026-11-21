@@ -1,0 +1,42 @@
+.nf {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  text-align: center;
+  padding-block: clamp(60px, 10vw, 120px);
+}
+
+.nf img {
+  width: auto;
+  height: 170px;
+  animation: bob 5s ease-in-out infinite;
+}
+
+.nf h1 {
+  font-size: clamp(40px, 6vw, 72px);
+  max-width: 760px;
+}
+
+.nf em {
+  color: var(--amber);
+  font-weight: 500;
+}
+
+.nf p {
+  color: var(--muted);
+  max-width: 460px;
+}
+
+.nf__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+@keyframes bob {
+  50% {
+    transform: translateY(-10px) rotate(-3deg);
+  }
+}
