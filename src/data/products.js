@@ -404,4 +404,45 @@ export const products = [
     },
     images: [],
   },
+  {
+    id: 'p-014',
+    slug: 'two-storey-service-garage',
+    sku: 'SW-GW-004',
+    name: 'Two-Storey Service Garage',
+    category: 'garages',
+    price: 6999,
+    badge: 'LED Lit',
+    featured: true,
+    isNew: true,
+    availability: 'In stock',
+    shortDescription:
+      'Open-front steel-truss workshop with a mezzanine parking deck, LED strip lighting and a full kit of workshop tools.',
+    description: [
+      'A two-level service garage built around a black steel-truss frame with a translucent pitched roof. The ground floor has three service bays; a staircase leads up to a mezzanine deck with yellow safety rails.',
+      'The interior is lit by a warm LED strip beneath the roof beam. Sponsor boards run along the mezzanine fascia, and the grey side wall is cut with rows of window openings.',
+      'Comes dressed with a full set of workshop details: tyre changer, wheel balancer, engine crane, trolley jack, tyre rack, oil drum, jerry can, traffic cone, wheelie bin and spare tyres.',
+    ],
+    highlights: [
+      'Mezzanine parking deck with safety rails',
+      'Built-in LED strip lighting',
+      'Three ground-floor service bays',
+      '11-piece workshop accessory set',
+    ],
+    specs: {
+      Scale: '1:64',
+      Dimensions: '19.5 × 15 × 12 cm',
+      Levels: 'Two — ground floor + mezzanine deck',
+      Lighting: 'Built-in LED strip',
+      Accessories:
+        'Tyre changer, wheel balancer, engine crane, trolley jack, tyre rack, oil drum, jerry can, cone, bin, 4 tyres',
+    },
+    art: { type: 'garage', plaque: 'SERVICE GARAGE', backdrop: ['#eef3f4', '#c9d9dc'] },
+    images: [
+      { src: '/products/two-storey-service-garage/front.webp', alt: 'Front view' },
+      { src: '/products/two-storey-service-garage/angle-left.webp', alt: 'Three-quarter view, left' },
+      { src: '/products/two-storey-service-garage/angle-right.webp', alt: 'Three-quarter view, right' },
+      { src: '/products/two-storey-service-garage/dimensions.webp', alt: 'Dimensions' },
+      { src: '/products/two-storey-service-garage/accessories.webp', alt: 'Included accessories' },
+    ],
+  },
 ]
